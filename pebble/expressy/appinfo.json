@@ -1,0 +1,19 @@
+{
+  "uuid": "d3ce4ebe-7724-415f-aa83-d3fa6995b805",
+  "shortName": "expressy",
+  "longName": "expressy",
+  "companyName": "MakeAwesomeHappen",
+  "versionLabel": "1.0",
+  "sdkVersion": "3",
+  "targetPlatforms": ["aplite", "basalt", "chalk"],
+  "enableMultiJS": true,
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
