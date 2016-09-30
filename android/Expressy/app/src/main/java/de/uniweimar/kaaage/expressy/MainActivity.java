@@ -34,6 +34,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 		GridLayout puzzleLayout = (GridLayout) findViewById(R.id.gridLayoutPuzzle);
 
+		mReceiver = new ExpressyDataReceiver("d3ce4ebe-7724-415f-aa83-d3fa6995b805", getApplicationContext())
+		{
+			@Override
+			public void onReceiveData(double roll, double pitch)
+			{
+				if (imageView != null)
+				{
+					imageView.setRotation(rotation + (float) roll + 180);
+					imageView.setRotationX(rotationX + (float) pitch);
+				}
+
+			}
+		};
+
 		Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.android_logo);
 
 		Bitmap[][] bitmaps = createBitmaps(img);
@@ -83,6 +97,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
+		if (mReceiver != null)
+		{
+			mReceiver.onTouch(v, event);
+		}
+
 		switch (event.getAction()) {
 
 			case MotionEvent.ACTION_DOWN:
@@ -104,43 +123,10 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 				imageView = null;
 				rotation = 0;
 				rotationX = 0;
+				break;
 			default:
 				return false;
 		}
 		return true;
 	}
-
-	/**
-	 * Dispatch onResume() to fragments.  Note that for better inter-operation
-	 * with older versions of the platform, at the point of this call the
-	 * fragments attached to the activity are <em>not</em> resumed.  This means
-	 * that in some cases the previous state may still be saved, not allowing
-	 * fragment transactions that modify the state.  To correctly interact
-	 * with fragments in their proper state, you should instead override
-	 * {@link #onResumeFragments()}.
-	 */
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-
-		// Get information back from the watchapp
-		if (mReceiver == null)
-		{
-			mReceiver = new ExpressyDataReceiver("d3ce4ebe-7724-415f-aa83-d3fa6995b805", getApplicationContext())
-			{
-				@Override
-				public void onReceiveData(double roll, double pitch)
-				{
-					if (imageView != null)
-					{
-						imageView.setRotation(rotation + (float) roll + 180);
-						imageView.setRotationX(rotationX + (float) pitch);
-					}
-
-				}
-			};
-		}
-	}
-
 }

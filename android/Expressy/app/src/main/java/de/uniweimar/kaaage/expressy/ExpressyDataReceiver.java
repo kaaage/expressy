@@ -1,6 +1,8 @@
 package de.uniweimar.kaaage.expressy;
 
 import android.content.Context;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import com.getpebble.android.kit.PebbleKit;
@@ -11,9 +13,8 @@ import java.util.UUID;
 /**
  * Created by kaaage on 25/09/16.
  */
-public abstract class ExpressyDataReceiver extends PebbleKit.PebbleDataReceiver
+public abstract class ExpressyDataReceiver extends PebbleKit.PebbleDataReceiver implements View.OnTouchListener
 {
-	private PebbleKit.PebbleDataReceiver mReceiver;
 	private static int vector[] = new int[3];
 	private Context context;
 
@@ -44,6 +45,26 @@ public abstract class ExpressyDataReceiver extends PebbleKit.PebbleDataReceiver
 
 		// Launch the sports app
 		PebbleKit.startAppOnPebble(context, UUID.fromString(appId));
+	}
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event)
+	{
+		switch (event.getAction()) {
+
+			case MotionEvent.ACTION_DOWN:
+				System.out.println("ACTION_DOWN");
+				break;
+			case MotionEvent.ACTION_MOVE:
+				System.out.println("ACTION_MOVE");
+				break;
+			case MotionEvent.ACTION_UP:
+				System.out.println("ACTION_UP");
+				break;
+			default:
+				return false;
+		}
+		return true;
 	}
 
 	@Override
