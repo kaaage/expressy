@@ -1,6 +1,7 @@
 # Built application files
 *.apk
 *.ap_
+!expressy.apk
 
 # Files for the Dalvik VM
 *.dex
